@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ujian Online</title>
+</head>
+
+<body>
+
+<h2>Login Peserta</h2>
+
+<input id="nama" placeholder="Nama">
+<br><br>
+
+<input id="token" placeholder="Token">
+<br><br>
+
+<button onclick="login()">Mulai Ujian</button>
+
+<div id="ujian" style="display:none">
+
+<h3>Soal 1</h3>
+<p>Sumber hukum Islam adalah...</p>
+
+<label><input type="checkbox" name="s1" value="A">Al Qur'an</label><br>
+<label><input type="checkbox" name="s1" value="B">Hadits</label><br>
+<label><input type="checkbox" name="s1" value="C">Ijma</label><br>
+<label><input type="checkbox" name="s1" value="D">Cerita rakyat</label><br>
+
+<br>
+
+<h3>Soal 2</h3>
+<p>Ibu kota Indonesia adalah...</p>
+
+<label><input type="radio" name="s2" value="A">Jakarta</label><br>
+<label><input type="radio" name="s2" value="B">Bandung</label><br>
+<label><input type="radio" name="s2" value="C">Surabaya</label><br>
+<label><input type="radio" name="s2" value="D">Medan</label><br>
+
+<br><br>
+
+<button onclick="submitUjian()">Submit</button>
+
+</div>
+
+<h2 id="hasil"></h2>
+
+<script>
+
+let tokens = ["ABC123","DEF456","GHI789"]
+
+function login(){
+
+let token = document.getElementById("token").value
+
+if(!tokens.includes(token)){
+alert("Token tidak valid")
+return
+}
+
+if(localStorage.getItem(token)){
+alert("Token sudah digunakan di perangkat ini")
+return
+}
+
+localStorage.setItem(token,"used")
+
+document.getElementById("ujian").style.display="block"
+
+}
+
+function submitUjian(){
+
+let skor = 0
+
+// soal 1
+let s1 = document.querySelectorAll('input[name="s1"]:checked')
+
+s1.forEach(j=>{
+if(j.value=="A" || j.value=="B" || j.value=="C"){
+skor++
+}
+})
+
+// soal 2
+let s2 = document.querySelector('input[name="s2"]:checked')
+
+if(s2 && s2.value=="A"){
+skor++
+}
+
+document.getElementById("hasil").innerHTML="Nilai Anda: "+skor
+
+}
+
+</script>
+
+</body>
+</html>
